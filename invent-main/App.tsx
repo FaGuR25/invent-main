@@ -2,11 +2,18 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import Home from './apps/screen/Home';
 import Login from './apps/screen/Login';
-import ProductDetail from './apps/screen/ProductDetail';
+import ProductDetail, {
+  Params as ProductDetailParams,
+} from './apps/screen/ProductDetail';
 
 const Stack = createStackNavigator();
 
-export default function App() {
+export type RootStackParamList = {
+  Home: undefined;
+  ProductDetails: ProductDetailParams;
+};
+
+export default function App(): React.JSX.Element {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login">
