@@ -4,12 +4,8 @@ import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import {RouteProp} from '@react-navigation/native';
 import {Product} from './model/Products';
 import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
-import {Props as ProductDetailProps} from './ProductDetail';
+import {RootStackParamList} from '../../App';
 
-type RootStackParamList = {
-  Home: undefined;
-  ProductDetail: ProductDetailProps;
-};
 type HomeScreenProps = StackNavigationProp<RootStackParamList, 'Home'>;
 type HomeScreenRoute = RouteProp<RootStackParamList, 'Home'>;
 
@@ -23,7 +19,7 @@ function Home({navigation}: HomeProps): React.JSX.Element {
   const productItem = ({item}: {item: Product}) => (
     <TouchableOpacity
       style={styles.productItem}
-      onPress={() => navigation.navigate('ProductDetail', {product: item})}>
+      onPress={() => navigation.push('ProductDetail', {product: item})}>
       <View style={{flexDirection: 'row'}}>
         <View style={{flexDirection: 'column', flexGrow: 9}}>
           <Text style={styles.itemTitle}>{item.nombre}</Text>
