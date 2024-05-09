@@ -1,6 +1,8 @@
+//Products.ts
+/* eslint-disable prettier/prettier */
 export interface Product {
   id: number;
-  nombre: String;
+  nombre: string;
   precio: number;
   minStock: number;
   currentStock: number;

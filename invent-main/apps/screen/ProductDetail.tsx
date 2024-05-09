@@ -1,68 +1,78 @@
-import React, {useEffect, useState} from 'react';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {Product} from './model/Products';
-import {Text, View, StyleSheet} from 'react-native';
-import {RouteProp} from '@react-navigation/native';
-import {RootStackParamList} from '../../App';
-import {StackNavigationProp} from '@react-navigation/stack';
+/* eslint-disable prettier/prettier */
+import React, { useEffect, useState } from 'react';
+import { SafeAreaView, Text, View, StyleSheet, Platform } from 'react-native';
+import { RouteProp } from '@react-navigation/native';
+import { RootStackParamList } from '../../App';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { Product } from '../model/Products';
 
 export type Params = {
   product: Product;
 };
 
 export type Props = {
-  route: RouteProp<RootStackParamList, 'ProductDetails'>;
-  navigation: StackNavigationProp<RootStackParamList, 'ProductDetails'>;
+  route: RouteProp<RootStackParamList, 'ProdutDetails'>;
+  navigation: StackNavigationProp<RootStackParamList, 'ProdutDetails'>;
 };
 
-function ProductsDetail({route}: Props): React.JSX.Element {
-  const [product, setProduct] = useState<Product>();
+const ProductDetails: React.FC<Props> = ({ route }): React.ReactElement => {
+  const [product, setProduct] = useState<Product | null>(null);
+
   useEffect(() => {
     setProduct(route.params.product);
   }, [route]);
+
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
       {product && (
-        <View style={styles.page}>
-          <Text style={styles.header}>{product.nombre}</Text>
-          <View style={styles.row}>
-            <Text style={styles.col}> Existencias:</Text>
-            <Text style={styles.colAuto}>
-              {product.currentStock} / {product.maxStock}
-            </Text>
+        <View style={styles.productContainer}>
+          <Text style={styles.productName}>{product.nombre}</Text>
+          <View style={styles.infoContainer}>
+            <Text style={styles.label}>Stock:</Text>
+            <Text style={styles.value}>{product.currentStock}</Text>
           </View>
-          <View style={styles.row}>
-            <Text style={styles.col}>precio</Text>
-            <Text style={styles.colAuto}> {product.precio}</Text>
+          <View style={styles.infoContainer}>
+            <Text style={styles.label}>Price:</Text>
+            <Text style={styles.value}>{product.precio}</Text>
           </View>
         </View>
       )}
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
-  header: {
-    fontSize: 40,
-    color: 'black',
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    paddingTop: Platform.OS === 'android' ? 25 : 0, // Ajuste para dispositivos Android
   },
-  precio: {
-    fontSize: 40,
-    color: 'black',
+  productContainer: {
+    backgroundColor: '#f0f0f0',
+    padding: 20,
+    borderRadius: 10,
+    marginTop: 20,
+    marginHorizontal: 20,
+    alignItems: 'center',
   },
-  existencia: {
-    fontSize: 25,
-    color: 'black',
+  productName: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 10,
   },
-  row: {
-    display: 'flex',
+  infoContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 5,
   },
-  col: {
-    flexGrow: 999,
+  label: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginRight: 5,
   },
-  colAuto: {},
-  page:{
-    
-  }
+  value: {
+    fontSize: 18,
+  },
 });
-export default ProductsDetail;
+
+export default ProductDetails;

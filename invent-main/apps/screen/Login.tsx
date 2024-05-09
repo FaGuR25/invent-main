@@ -1,32 +1,34 @@
+//Login.tsx
+/* eslint-disable prettier/prettier */
+import {StackNavigationProp} from '@react-navigation/stack';
+import React from 'react';
 import {
   SafeAreaView,
-  StyleSheet,
-  View,
-  TextInput,
   Button,
+  StyleSheet,
   Text,
+  TextInput,
+  View,
   Alert,
 } from 'react-native';
-import React, {useState} from 'react';
 
 const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    backgroundColor: '#c0c0c040',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 16,
-  },
-
   screen: {
     height: '100%',
-    backgroundColor: '#323844',
+    backgroundColor: '#543343',
     justifyContent: 'center',
-    alignContent: 'center',
+    alignItems: 'center',
   },
-
-  TextInput: {
-    borderWidth: 1,
+  container: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#c0c0c040',
+    width: '100%',
+    padding: 16,
+  },
+  textInput: {
+    color: 'black',
+    borderBottomWidth: 1,
     borderRadius: 8,
     backgroundColor: 'white',
     paddingVertical: 8,
@@ -37,45 +39,46 @@ const styles = StyleSheet.create({
 });
 
 type RootStackParamList = {
-  HOme: undefined;
+  Home: undefined;
   Login: undefined;
 };
-type LoginProps = {
+
+type LogInProps = {
   navigation: StackNavigationProp<RootStackParamList, 'Home'>;
 };
 
-function Login({navigation}: LoginProps): React.JSX.Element {
-  const [usuario, setUsuario] = useState('');
-  const [contrasena, setContrasena] = useState('');
+function Login({navigation}: LogInProps): React.JSX.Element {
+  const [user, setUser] = React.useState('');
+  const [password, setPassword] = React.useState('');
 
-  const btnIngresarOnPress = function () {
-    if (usuario && contrasena) {
+  const btnIngresaronPress = function () {
+    if (user && password) {
+      Alert.alert('Entraste', 'Iniciando sesión...');
       navigation.navigate('Home');
       return;
     }
-    Alert.alert('Fallido', 'Datos incorrectos...');
+    Alert.alert('Fallido', 'Datos incorrectos');
   };
   return (
     <SafeAreaView style={styles.screen}>
       <View style={styles.container}>
-        <Text>Iniciar Sesión</Text>
+        <Text>Ingrese su usuario</Text>
         <TextInput
-          style={styles.TextInput}
+          style={styles.textInput}
           placeholder="Usuario"
-          placeholderTextColor="#828894"
-          onChangeText={u => setUsuario(u)}
+          placeholderTextColor={'#828894'}
+          onChangeText={u => setUser(u)}
         />
         <TextInput
-          style={styles.TextInput}
+          style={styles.textInput}
           placeholder="Contraseña"
-          placeholderTextColor="#828894"
           secureTextEntry={true}
-          onChangeText={p => setContrasena(p)}
+          placeholderTextColor={'#828894'}
+          onChangeText={p => setPassword(p)}
         />
-        <Button title="Ingresar" onPress={btnIngresarOnPress} />
+        <Button title="Ingresar" onPress={btnIngresaronPress} />
       </View>
     </SafeAreaView>
   );
 }
-
 export default Login;
